@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { getTasks, updateTask, deleteTask } from '../lib/action';
 
+
 export default function TaskList() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     fetchTasks();
@@ -28,19 +29,19 @@ export default function TaskList() {
   return (
     <div className="space-y-4">
       {tasks.map((task) => (
-        <div key={task._id} className="p-4 border rounded">
+        <div key={task._id.toString()} className="p-4 border rounded">
           <h2 className="text-xl font-bold">{task.title}</h2>
           <p>{task.description}</p>
           <p>Due: {task.dueDate}</p>
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => handleToggleComplete(task._id, task.isCompleted)}
+              onClick={() => handleToggleComplete(task._id.toString(), task.isCompleted)}
               className={`p-2 ${task.isCompleted ? 'bg-green-500' : 'bg-gray-500'} text-white rounded`}
             >
               {task.isCompleted ? 'Completed' : 'Mark Complete'}
             </button>
             <button
-              onClick={() => handleDelete(task._id)}
+              onClick={() => handleDelete(task._id.toString())}
               className="p-2 bg-red-500 text-white rounded"
             >
               Delete
